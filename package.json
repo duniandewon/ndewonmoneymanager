@@ -4,7 +4,11 @@
   "description": "Application to manage my finances",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "clientinstall": "npm i --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "NDEWON",
   "license": "ISC",
@@ -15,5 +19,9 @@
     "express-validator": "^6.3.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.7.12"
+  },
+  "devDependencies": {
+    "concurrently": "^5.0.0",
+    "nodemon": "^2.0.1"
   }
 }
