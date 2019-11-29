@@ -1,0 +1,4 @@
+{
+  "mongoURI": "mongodb+srv://ndewon:Wu55uP*2@sistemkeuangan-nuly9.mongodb.net/test?retryWrites=true&w=majority",
+  "jwtSecret": "mydigimonshinka"
+}
