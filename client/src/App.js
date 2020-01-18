@@ -17,6 +17,8 @@ import Categories from './pages/Categories';
 import Transactions from './pages/Transactions';
 import Banks from './pages/Banks';
 import Reports from './pages/Reports';
+import Register from './components/auth/Register';
+import Login from './components/auth/Login';
 
 import './scss/styles.scss';
 
@@ -29,15 +31,17 @@ const App = () => {
           <div className='wrapper'>
             <Header setSideNav={setSideNav} sideNav={sideNav} />
             <Sidenav sideNav={sideNav} setSideNav={setSideNav} />
-            <Main>
-              <Switch>
+            <Switch>
+              <Main>
+                <Route path='/register' component={Register} />
+                <Route path='/login' component={Login} />
                 <Route exact path='/' component={Dashboard} />
                 <Route path='/categories' component={Categories} />
                 <Route path='/transactions' component={Transactions} />
                 <Route path='/banks' component={Banks} />
                 <Route path='/reports' component={Reports} />
-              </Switch>
-            </Main>
+              </Main>
+            </Switch>
             <Footer />
           </div>
           {/** ./wrapper */}
