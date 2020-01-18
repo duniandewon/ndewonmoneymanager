@@ -1,0 +1,8 @@
+.site-logo {
+  display: none;
+  font-size: $text-small;
+
+  @media only screen and (min-width: $laptop) {
+    display: block;
+  }
+}

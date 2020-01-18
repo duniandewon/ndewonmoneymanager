@@ -1,0 +1,13 @@
+.footer {
+  grid-area: footer;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: $text-primary;
+  padding: 0 1.6rem;
+
+  &__signature {
+    font-size: $text-small;
+    margin-top: 0.4rem;
+  }
+}
