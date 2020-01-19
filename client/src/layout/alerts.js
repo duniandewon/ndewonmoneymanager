@@ -13,7 +13,9 @@ const Alerts = () => {
       {alerts.length > 0 &&
         alerts.map(alert => (
           <Alert key={alert.id} variant={alert.type}>
-            <i className='fas fa-info-circle'></i> {alert.msg}
+            <h4>
+              <i className='fas fa-info-circle'></i> {alert.msg}
+            </h4>
           </Alert>
         ))}
     </Fragment>

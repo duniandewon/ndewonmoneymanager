@@ -23,7 +23,6 @@ import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 
 import './scss/styles.scss';
-import Alert from 'react-bootstrap/Alert';
 
 const App = () => {
   const [sideNav, setSideNav] = useState('');
