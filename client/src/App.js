@@ -22,7 +22,13 @@ import Reports from './pages/Reports';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 
+import setAuthToken from './utils/setAuthToken';
+
 import './scss/styles.scss';
+
+if (localStorage.token) {
+  setAuthToken(localStorage.token);
+}
 
 const App = () => {
   const [sideNav, setSideNav] = useState('');

@@ -1,4 +1,7 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext, useEffect } from 'react';
+
+/** Auth context */
+import authContext from '../context/auth/authContext';
 
 /** Bootsrap Components */
 import Row from 'react-bootstrap/Row';
@@ -8,6 +11,12 @@ import OverviewCard from '../components/OverviewCard';
 import LatestTransactions from '../components/LatestTransactions';
 
 const Dashboard = () => {
+  const { loadUser } = useContext(authContext);
+
+  useEffect(() => {
+    loadUser();
+  }, []);
+
   return (
     <Fragment>
       <Row>

@@ -12,7 +12,7 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-const Register = () => {
+const Register = props => {
   const [user, setUser] = useState({
     name: '',
     email: '',
@@ -21,7 +21,9 @@ const Register = () => {
   });
 
   const { setAlert } = useContext(alertContext);
-  const { register, error, clearErrors } = useContext(authContext);
+  const { register, error, clearErrors, isAuthenticated } = useContext(
+    authContext
+  );
 
   const { name, email, password, confPassword } = user;
 
@@ -33,11 +35,14 @@ const Register = () => {
   };
 
   useEffect(() => {
+    if (isAuthenticated) {
+      props.history.push('/');
+    }
     if (error == 'User already exists') {
       setAlert(error, 'danger');
       clearErrors();
     }
-  }, [error]);
+  }, [error, isAuthenticated, props.history]);
 
   const handleSubmit = e => {
     e.preventDefault();

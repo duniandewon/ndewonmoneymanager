@@ -1,4 +1,7 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useContext, useEffect } from 'react';
+
+/** Auth context */
+import authContext from '../context/auth/authContext';
 
 /** Bootsrap Components */
 import Row from 'react-bootstrap/Row';
@@ -10,10 +13,16 @@ import CategoryForm from '../components/categories/CategoryForm';
 import CategoryFilter from '../components/categories/CategoryFilter';
 
 const Categories = () => {
+  const { loadUser } = useContext(authContext);
+
   const [form, setForm] = useState(false);
 
   const handleClose = () => setForm(false);
   const handleShow = () => setForm(true);
+
+  useEffect(() => {
+    loadUser();
+  }, []);
 
   return (
     <Fragment>
