@@ -51,16 +51,20 @@ const AuthState = props => {
   };
 
   /** Load User */
-  const loadUser = () => console.log(loadUser);
+  const loadUser = () => console.log('loadUser');
 
   /** Login User */
-  const login = () => console.log(login);
+  const login = () => console.log('login');
 
   /** Logout */
-  const logout = () => console.log(logout);
+  const logout = () => console.log('logout');
 
   /** Clear errors */
-  const clearErrors = () => console.log(clearErrors);
+  const clearErrors = () => {
+    dispatch({
+      type: CLEAR_ERRORS
+    });
+  };
 
   return (
     <AuthContext.Provider

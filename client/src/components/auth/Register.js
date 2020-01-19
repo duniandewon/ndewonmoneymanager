@@ -1,4 +1,7 @@
-import React, { Fragment, useState, useContext } from 'react';
+import React, { Fragment, useState, useContext, useEffect } from 'react';
+
+/** Auth context */
+import authContext from '../../context/auth/authContext';
 
 /** Alert context */
 import alertContext from '../../context/alert/alertContext';
@@ -18,24 +21,34 @@ const Register = () => {
   });
 
   const { setAlert } = useContext(alertContext);
+  const { register, error, clearErrors } = useContext(authContext);
 
   const { name, email, password, confPassword } = user;
 
   const handleChange = e => {
     setUser({
       ...user,
-      [e.target.id]: e.target.value
+      [e.target.name]: e.target.value
     });
   };
+
+  useEffect(() => {
+    if (error == 'User already exists') {
+      setAlert(error, 'danger');
+      clearErrors();
+    }
+  }, [error]);
 
   const handleSubmit = e => {
     e.preventDefault();
     if (name === '' || email === '' || password === '') {
       setAlert('Please fill in all fields', 'danger');
+    } else if (password.length < 6) {
+      setAlert('Passwords should be at least 6 charachters', 'danger');
     } else if (password !== confPassword) {
       setAlert("Passwords don't match", 'danger');
     } else {
-      console.log(user);
+      register({ name, email, password });
     }
   };
 
@@ -54,6 +67,7 @@ const Register = () => {
                 type='text'
                 defaultValue={name}
                 onChange={handleChange}
+                name='name'
               />
             </Form.Group>
             <Form.Group controlId='email'>
@@ -63,6 +77,7 @@ const Register = () => {
                 type='email'
                 defaultValue={email}
                 onChange={handleChange}
+                name='email'
               />
             </Form.Group>
             <Form.Group controlId='password'>
@@ -72,6 +87,7 @@ const Register = () => {
                 type='password'
                 defaultValue={password}
                 onChange={handleChange}
+                name='password'
               />
             </Form.Group>
             <Form.Group controlId='confPassword'>
@@ -81,6 +97,7 @@ const Register = () => {
                 type='password'
                 defaultValue={confPassword}
                 onChange={handleChange}
+                name='confPassword'
               />
             </Form.Group>
             <Button variant='success' type='submit' size='lg' block>
