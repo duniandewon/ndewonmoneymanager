@@ -20,7 +20,7 @@ const Header = ({ sideNav, setSideNav }) => {
             >
               <i className='fas fa-bars' />
             </div>
-            <Link className='btn btn-primary' onClick={() => logout()}>
+            <Link to='#' className='btn btn-primary' onClick={() => logout()}>
               <i className='fas fa-sign-out-alt' />
             </Link>
           </Fragment>
