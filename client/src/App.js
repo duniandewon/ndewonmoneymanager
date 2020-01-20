@@ -22,6 +22,9 @@ import Reports from './pages/Reports';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 
+/** Private route */
+import PrivateRoute from './components/routing/PrivateRoute';
+
 import setAuthToken from './utils/setAuthToken';
 
 import './scss/styles.scss';
@@ -43,13 +46,13 @@ const App = () => {
               <Main>
                 <Alerts />
                 <Switch>
+                  <PrivateRoute exact path='/' component={Dashboard} />
+                  <PrivateRoute path='/categories' component={Categories} />
+                  <PrivateRoute path='/transactions' component={Transactions} />
+                  <PrivateRoute path='/banks' component={Banks} />
+                  <PrivateRoute path='/reports' component={Reports} />
                   <Route path='/register' component={Register} />
                   <Route path='/login' component={Login} />
-                  <Route exact path='/' component={Dashboard} />
-                  <Route path='/categories' component={Categories} />
-                  <Route path='/transactions' component={Transactions} />
-                  <Route path='/banks' component={Banks} />
-                  <Route path='/reports' component={Reports} />
                 </Switch>
               </Main>
               <Footer />

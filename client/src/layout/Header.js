@@ -12,16 +12,18 @@ const Header = ({ sideNav, setSideNav }) => {
         <Link to='/' className='site-logo' style={{ color: '#fff' }}>
           <h1>Ndewon Admin Dashboard</h1>
         </Link>
-        <div
-          className='sidenav__toggler'
-          onClick={() => sideNav === '' && setSideNav('active')}
-        >
-          <i className='fas fa-bars' />
-        </div>
         {isAuthenticated && (
-          <Link className='btn btn-primary' onClick={() => logout()}>
-            <i className='fas fa-sign-out-alt' />
-          </Link>
+          <Fragment>
+            <div
+              className='sidenav__toggler'
+              onClick={() => sideNav === '' && setSideNav('active')}
+            >
+              <i className='fas fa-bars' />
+            </div>
+            <Link className='btn btn-primary' onClick={() => logout()}>
+              <i className='fas fa-sign-out-alt' />
+            </Link>
+          </Fragment>
         )}
       </header>
     </Fragment>
