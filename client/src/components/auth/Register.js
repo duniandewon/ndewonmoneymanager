@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 /** Auth context */
 import authContext from '../../context/auth/authContext';
@@ -108,6 +109,9 @@ const Register = props => {
             <Button variant='success' type='submit' size='lg' block>
               Register
             </Button>
+            <Link to='/login' className='btn btn-link btn-block btn-lg'>
+              Already have an account?
+            </Link>
           </Form>
         </Col>
       </Row>
