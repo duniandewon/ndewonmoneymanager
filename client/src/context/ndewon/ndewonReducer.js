@@ -1,7 +1,9 @@
 import {
+  GET_CATEGORY,
   ADD_CATEGORY,
   UPDATE_CATEGORY,
   DELETE_CATEGORY,
+  CLEAR_CATEGORY,
   ADD_BANK,
   UPDATE_BANK,
   DELETE_BANK,
@@ -17,6 +19,12 @@ import {
 
 export default (state, action) => {
   switch (action.type) {
+    case GET_CATEGORY:
+      return {
+        ...state,
+        categories: action.payload
+      };
+
     case ADD_CATEGORY:
       return {
         ...state,

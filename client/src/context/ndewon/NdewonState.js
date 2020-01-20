@@ -6,9 +6,11 @@ import NdewonContext from './ndewonContext';
 import ndewonReducer from './ndewonReducer';
 
 import {
+  GET_CATEGORY,
   ADD_CATEGORY,
   UPDATE_CATEGORY,
   DELETE_CATEGORY,
+  CLEAR_CATEGORY,
   ADD_BANK,
   UPDATE_BANK,
   DELETE_BANK,
@@ -24,24 +26,7 @@ import {
 
 const NdewonState = props => {
   const initialState = {
-    categories: [
-      {
-        id: 1,
-        name: 'Salary'
-      },
-      {
-        id: 2,
-        name: 'Web Dev'
-      },
-      {
-        id: 3,
-        name: 'Phone Bill'
-      },
-      {
-        id: 4,
-        name: 'Utilities'
-      }
-    ],
+    categories: [],
     banks: [
       {
         id: 1,
@@ -75,6 +60,23 @@ const NdewonState = props => {
   };
 
   const [state, dispatch] = useReducer(ndewonReducer, initialState);
+
+  /** Get Categories */
+  const getCategories = async () => {
+    try {
+      const res = await axios.get('/api/categories');
+
+      dispatch({
+        type: GET_CATEGORY,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({
+        type: ERRORS,
+        payload: err.response.data.errors
+      });
+    }
+  };
 
   /** Add category */
   const addCategory = async category => {
@@ -206,6 +208,7 @@ const NdewonState = props => {
         current: state.current,
         filtered: state.filtered,
         errors: state.errors,
+        getCategories,
         addCategory,
         updateCategory,
         deleteCategory,
