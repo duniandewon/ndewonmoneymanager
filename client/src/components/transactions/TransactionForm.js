@@ -148,7 +148,7 @@ const TransactionForm = ({ show, handleClose }) => {
                   required
                 >
                   <option>Choose One</option>
-                  {categories !== null &&
+                  {categories &&
                     categories.map(category => (
                       <option key={category._id} value={category.name}>
                         {category.name}
