@@ -117,6 +117,13 @@ const NdewonState = props => {
     });
   };
 
+  /** Clear categories */
+  const clearCategories = () => {
+    dispatch({
+      type: CLEAR_CATEGORY
+    });
+  };
+
   /** Add Banks */
   const addBank = bank => {
     bank.id = uuid.v4();
@@ -212,6 +219,7 @@ const NdewonState = props => {
         addCategory,
         updateCategory,
         deleteCategory,
+        clearCategories,
         addBank,
         updateBank,
         deleteBank,

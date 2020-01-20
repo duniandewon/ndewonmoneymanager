@@ -51,6 +51,15 @@ export default (state, action) => {
         loading: false
       };
 
+    case CLEAR_CATEGORY:
+      return {
+        ...state,
+        categories: null,
+        filtered: null,
+        errors: null,
+        current: null
+      };
+
     case ADD_BANK:
       return {
         ...state,
