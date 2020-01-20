@@ -40,7 +40,7 @@ const LatestTransactions = () => {
           <TransactionItem />
           <Card.Footer className='d-flex justify-content-end'>
             <Link to='/transactions' className='btn btn-link btn-lg'>
-              View All <i class='fas fa-play fa-xs'></i>
+              View All <i className='fas fa-play fa-xs'></i>
             </Link>
           </Card.Footer>
         </Card>
