@@ -1,24 +1,32 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { Link } from 'react-router-dom';
 
+/** Auth context */
+import authContext from '../context/auth/authContext';
+
 const Sidenav = ({ sideNav, setSideNav }) => {
+  const { user } = useContext(authContext);
   return (
     <Fragment>
       <aside className={`sidenav ${sideNav}`}>
         <div className='sidenav__close-icon' onClick={() => setSideNav('')}>
           <i className='fas fa-times' />
         </div>
-        <div className='sidenav__header'>
-          <div className='sidenav__header-img'>
-            <img src='//unsplash.it/100/100' alt='user profile' />
-          </div>
-          <p className='sidenav__header-info'>
-            <span className='sidenav__header-info--name'>Ndewon</span>
-            <span className='sidenav__header-info--position'>
-              Chief Executive Officer
-            </span>
-          </p>
-        </div>
+        {user && (
+          <Fragment>
+            <div className='sidenav__header'>
+              <div className='sidenav__header-img'>
+                <img src='//unsplash.it/100/100' alt='user profile image' />
+              </div>
+              <p className='sidenav__header-info'>
+                <span className='sidenav__header-info--name'>{user.name}</span>
+                <span className='sidenav__header-info--position'>
+                  Chief Executive Officer
+                </span>
+              </p>
+            </div>
+          </Fragment>
+        )}
         <ul className='main-nav'>
           <li className='main-nav__item'>
             <Link
