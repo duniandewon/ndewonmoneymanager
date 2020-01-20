@@ -11,7 +11,8 @@ import {
   SET_CURRENT,
   CLEAR_CURRENT,
   FILTER,
-  CLEAR_FILTER
+  CLEAR_FILTER,
+  ERRORS
 } from '../types';
 
 export default (state, action) => {
@@ -105,6 +106,12 @@ export default (state, action) => {
       return {
         ...state,
         filtered: null
+      };
+
+    case ERRORS:
+      return {
+        ...state,
+        errors: action.payload
       };
 
     default:

@@ -1,5 +1,7 @@
 import React, { useReducer } from 'react';
+import axios from 'axios';
 import uuid from 'uuid';
+
 import NdewonContext from './ndewonContext';
 import ndewonReducer from './ndewonReducer';
 
@@ -16,7 +18,8 @@ import {
   SET_CURRENT,
   CLEAR_CURRENT,
   FILTER,
-  CLEAR_FILTER
+  CLEAR_FILTER,
+  ERRORS
 } from '../types';
 
 const NdewonState = props => {
@@ -67,19 +70,33 @@ const NdewonState = props => {
       }
     ],
     current: null,
-    filtered: null
+    filtered: null,
+    errors: null
   };
 
   const [state, dispatch] = useReducer(ndewonReducer, initialState);
 
   /** Add category */
-  const addCategory = category => {
-    category.id = uuid.v4();
+  const addCategory = async category => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
 
-    dispatch({
-      type: ADD_CATEGORY,
-      payload: category
-    });
+    try {
+      const res = await axios.post('/api/categories', category, config);
+
+      dispatch({
+        type: ADD_CATEGORY,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({
+        type: ERRORS,
+        payload: err.response.data.errors
+      });
+    }
   };
 
   /** Udate category */
@@ -188,6 +205,7 @@ const NdewonState = props => {
         transactions: state.transactions,
         current: state.current,
         filtered: state.filtered,
+        errors: state.errors,
         addCategory,
         updateCategory,
         deleteCategory,
