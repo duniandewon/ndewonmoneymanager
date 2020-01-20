@@ -1,10 +1,11 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { Link } from 'react-router-dom';
 
-/** Bootstrap Components */
-import Button from 'react-bootstrap/Button';
+/** Auth context */
+import authContext from '../context/auth/authContext';
 
 const Header = ({ sideNav, setSideNav }) => {
+  const { logout, isAuthenticated } = useContext(authContext);
   return (
     <Fragment>
       <header className='header'>
@@ -17,9 +18,11 @@ const Header = ({ sideNav, setSideNav }) => {
         >
           <i className='fas fa-bars' />
         </div>
-        <Button variant='primary' onClick={() => alert('logged out')}>
-          <i className='fas fa-sign-out-alt' />
-        </Button>
+        {isAuthenticated && (
+          <Link className='btn btn-primary' onClick={() => logout()}>
+            <i className='fas fa-sign-out-alt' />
+          </Link>
+        )}
       </header>
     </Fragment>
   );
