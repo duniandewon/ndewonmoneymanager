@@ -1,15 +1,27 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useContext, useEffect } from 'react';
+
+/** Auth context */
+import authContext from '../../context/auth/authContext';
+
+/** Alert context */
+import alertContext from '../../context/alert/alertContext';
 
 /** Bootstrap components */
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 
-const Login = () => {
+const Login = props => {
   const [user, setUser] = useState({
     email: '',
     password: ''
   });
+
+  const { setAlert } = useContext(alertContext);
+  const { login, error, clearErrors, isAuthenticated } = useContext(
+    authContext
+  );
 
   const { email, password } = user;
 
@@ -19,6 +31,29 @@ const Login = () => {
       [e.target.id]: e.target.value
     });
   };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    if (email == '') {
+      setAlert("Email shouldn't be emapty", 'danger');
+    } else if (password == '') {
+      setAlert("Password shouldn't be emapty", 'danger');
+    } else {
+      login({ email, password });
+    }
+  };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      props.history.push('/');
+    }
+
+    if (error == 'Wrong password or email') {
+      setAlert(error, 'danger');
+      clearErrors();
+    }
+  }, [error, isAuthenticated, props.history]);
+
   return (
     <Fragment>
       <h1 className='text-center'>
@@ -26,7 +61,7 @@ const Login = () => {
       </h1>
       <Row className='justify-content-center'>
         <Col xs={6}>
-          <Form>
+          <Form onSubmit={handleSubmit}>
             <Form.Group controlId='email'>
               <Form.Label>Email</Form.Label>
               <Form.Control
@@ -45,6 +80,9 @@ const Login = () => {
                 onChange={handleChange}
               />
             </Form.Group>
+            <Button variant='success' type='submit' size='lg' block>
+              Login
+            </Button>
           </Form>
         </Col>
       </Row>
