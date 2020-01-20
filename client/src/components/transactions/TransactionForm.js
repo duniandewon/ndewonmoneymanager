@@ -148,11 +148,12 @@ const TransactionForm = ({ show, handleClose }) => {
                   required
                 >
                   <option>Choose One</option>
-                  {categories.map(category => (
-                    <option key={category.id} value={category.name}>
-                      {category.name}
-                    </option>
-                  ))}
+                  {categories !== null &&
+                    categories.map(category => (
+                      <option key={category._id} value={category.name}>
+                        {category.name}
+                      </option>
+                    ))}
                 </Form.Control>
               </Col>
             </Form.Group>
