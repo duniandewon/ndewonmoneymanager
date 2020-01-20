@@ -22,13 +22,15 @@ export default (state, action) => {
     case GET_CATEGORY:
       return {
         ...state,
-        categories: action.payload
+        categories: action.payload,
+        loading: false
       };
 
     case ADD_CATEGORY:
       return {
         ...state,
-        categories: [...state.categories, action.payload]
+        categories: [...state.categories, action.payload],
+        loading: false
       };
 
     case UPDATE_CATEGORY:
@@ -36,7 +38,8 @@ export default (state, action) => {
         ...state,
         categories: state.categories.map(category =>
           category.id === action.payload.id ? action.payload : category
-        )
+        ),
+        loading: false
       };
 
     case DELETE_CATEGORY:
@@ -44,7 +47,8 @@ export default (state, action) => {
         ...state,
         categories: state.categories.filter(
           category => category.id !== action.payload
-        )
+        ),
+        loading: false
       };
 
     case ADD_BANK:

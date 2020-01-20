@@ -26,7 +26,7 @@ import {
 
 const NdewonState = props => {
   const initialState = {
-    categories: [],
+    categories: null,
     banks: [
       {
         id: 1,

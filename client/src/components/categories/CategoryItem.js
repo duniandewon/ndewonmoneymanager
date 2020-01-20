@@ -22,14 +22,10 @@ const CategoryItem = () => {
     deleteCategory,
     setCurrent,
     filtered,
-    getCategories
+    loading
   } = useContext(ndewonContext);
 
-  useEffect(() => {
-    getCategories();
-  }, []);
-
-  if (categories.length == 0) {
+  if (categories !== null && categories.length == 0 && !loading) {
     return (
       <p className='lead text-center'>
         No categories available. Please create new categories
