@@ -110,11 +110,19 @@ const NdewonState = props => {
   };
 
   /** Delete category */
-  const deleteCategory = id => {
-    dispatch({
-      type: DELETE_CATEGORY,
-      payload: id
-    });
+  const deleteCategory = async id => {
+    try {
+      await axios.delete(`/api/categories/${id}`);
+      dispatch({
+        type: DELETE_CATEGORY,
+        payload: id
+      });
+    } catch (err) {
+      dispatch({
+        type: ERRORS,
+        payload: err.response.data.errors
+      });
+    }
   };
 
   /** Clear categories */

@@ -80,7 +80,7 @@ const CategoryItem = () => {
                         <Button
                           variant='danger'
                           onClick={() => {
-                            deleteCategory(category.id);
+                            deleteCategory(category._id);
                           }}
                         >
                           <i className='fas fa-trash-alt' />

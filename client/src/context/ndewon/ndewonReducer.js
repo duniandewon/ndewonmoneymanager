@@ -46,7 +46,7 @@ export default (state, action) => {
       return {
         ...state,
         categories: state.categories.filter(
-          category => category.id !== action.payload
+          category => category._id !== action.payload
         ),
         loading: false
       };
