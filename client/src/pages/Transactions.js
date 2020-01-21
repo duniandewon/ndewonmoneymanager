@@ -3,6 +3,9 @@ import React, { Fragment, useState, useContext, useEffect } from 'react';
 /** Auth context */
 import authContext from '../context/auth/authContext';
 
+/** Ndewon Context */
+import ndewonContext from '../context/ndewon/ndewonContext';
+
 /** Bootsrap Components */
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -16,6 +19,8 @@ import TransactionFilter from '../components/transactions/TransactionFilter';
 const Transactions = () => {
   const { loadUser } = useContext(authContext);
 
+  const { getCategories } = useContext(ndewonContext);
+
   const [form, setForm] = useState(false);
 
   const handleClose = () => setForm(false);
@@ -23,6 +28,7 @@ const Transactions = () => {
 
   useEffect(() => {
     loadUser();
+    getCategories();
   }, []);
 
   return (
