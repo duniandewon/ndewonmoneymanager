@@ -3,6 +3,9 @@ import React, { Fragment, useContext, useEffect } from 'react';
 /** Auth context */
 import authContext from '../context/auth/authContext';
 
+/** Ndewon Context */
+import ndewonContext from '../context/ndewon/ndewonContext';
+
 /** Bootsrap Components */
 import Row from 'react-bootstrap/Row';
 
@@ -13,8 +16,11 @@ import LatestTransactions from '../components/LatestTransactions';
 const Dashboard = () => {
   const { loadUser } = useContext(authContext);
 
+  const { getCategories } = useContext(ndewonContext);
+
   useEffect(() => {
     loadUser();
+    getCategories();
   }, []);
 
   return (
