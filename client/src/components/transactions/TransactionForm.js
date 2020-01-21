@@ -4,8 +4,6 @@ import React, { Fragment, useState, useContext, useEffect } from 'react';
 import ndewonContext from '../../context/ndewon/ndewonContext';
 
 /** Bootstrap Components */
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
@@ -38,7 +36,7 @@ const TransactionForm = ({ show, handleClose }) => {
   const onChange = e => {
     setTransaction({
       ...transaction,
-      [e.target.id]: e.target.value
+      [e.target.name]: e.target.value
     });
   };
 
@@ -97,7 +95,7 @@ const TransactionForm = ({ show, handleClose }) => {
 
   return (
     <Fragment>
-      <Modal show={show} onHide={handleHide} centered>
+      <Modal show={show} onHide={handleHide} size='lg' centered>
         <Form onSubmit={onSubmit}>
           <Modal.Header closeButton>
             <Modal.Title>
@@ -105,45 +103,51 @@ const TransactionForm = ({ show, handleClose }) => {
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Form.Group as={Row} controlId='date'>
-              <Form.Label column sm={3}>
+            <div className='form-group row'>
+              <label htmlFor='date' className='col-sm-2 col-form-label'>
                 Date:
-              </Form.Label>
-              <Col sm={9}>
-                <Form.Control
-                  as='input'
+              </label>
+              <div className='col-sm-10'>
+                <input
                   type='date'
-                  defaultValue={date}
+                  id='date'
+                  name='date'
+                  className='form-control'
+                  value={date}
                   onChange={onChange}
                   required
                 />
-              </Col>
-            </Form.Group>
-            <Form.Group as={Row} controlId='type'>
-              <Form.Label column sm={3}>
+              </div>
+            </div>
+            <div className='form-group row'>
+              <label htmlFor='type' className='col-sm-2 col-form-label'>
                 Type:
-              </Form.Label>
-              <Col sm={9}>
-                <Form.Control
-                  as='select'
-                  defaultValue={type}
+              </label>
+              <div className='col-sm-10'>
+                <select
+                  name='type'
+                  id='type'
+                  className='form-control'
+                  value={type}
                   onChange={onChange}
                   required
                 >
                   <option>Choose One</option>
                   <option value='income'>Income</option>
                   <option value='expenses'>Expenses</option>
-                </Form.Control>
-              </Col>
-            </Form.Group>
-            <Form.Group as={Row} controlId='trnCategory'>
-              <Form.Label column sm={3}>
+                </select>
+              </div>
+            </div>
+            <div className='form-group row'>
+              <label htmlFor='trnCategory' className='col-sm-2 col-form-label'>
                 Category:
-              </Form.Label>
-              <Col sm={9}>
-                <Form.Control
-                  as='select'
-                  defaultValue={trnCategory}
+              </label>
+              <div className='col-sm-10'>
+                <select
+                  name='trnCategory'
+                  id='trnCategory'
+                  className='form-control'
+                  value={trnCategory}
                   onChange={onChange}
                   required
                 >
@@ -154,47 +158,53 @@ const TransactionForm = ({ show, handleClose }) => {
                         {category.name}
                       </option>
                     ))}
-                </Form.Control>
-              </Col>
-            </Form.Group>
-            <Form.Group as={Row} controlId='description'>
-              <Form.Label column sm={3}>
+                </select>
+              </div>
+            </div>
+            <div className='form-group row'>
+              <label htmlFor='description' className='col-sm-2 col-form-label'>
                 Description:
-              </Form.Label>
-              <Col sm={9}>
-                <Form.Control
-                  as='input'
-                  placeholder='description'
-                  defaultValue={description}
+              </label>
+              <div className='col-sm-10'>
+                <input
+                  type='text'
+                  id='description'
+                  name='description'
+                  className='form-control'
+                  value={description}
                   onChange={onChange}
                   required
                 />
-              </Col>
-            </Form.Group>
-            <Form.Group as={Row} controlId='amount'>
-              <Form.Label column sm={3}>
+              </div>
+            </div>
+            <div className='form-group row'>
+              <label htmlFor='amount' className='col-sm-2 col-form-label'>
                 Amount:
-              </Form.Label>
-              <Col sm={9}>
-                <Form.Control
-                  as='input'
+              </label>
+              <div className='col-sm-10'>
+                <input
                   type='number'
-                  placeholder='amount'
-                  defaultValue={amount}
+                  id='amount'
+                  name='amount'
+                  className='form-control'
+                  value={amount}
                   onChange={onChange}
                   required
                 />
-              </Col>
-            </Form.Group>
-            <Form.Group as={Row} controlId='trnBank'>
-              <Form.Label column sm={3}>
+              </div>
+            </div>
+            <div className='form-group row'>
+              <label htmlFor='trnBank' className='col-sm-2 col-form-label'>
                 Bank:
-              </Form.Label>
-              <Col sm={9}>
-                <Form.Control
-                  as='select'
-                  defaultValue={trnBank}
+              </label>
+              <div className='col-sm-10'>
+                <select
+                  name='trnBank'
+                  id='trnBank'
+                  className='form-control'
+                  value={trnBank}
                   onChange={onChange}
+                  required
                 >
                   <option>Choose One</option>
                   {banks.map(bank => (
@@ -202,9 +212,9 @@ const TransactionForm = ({ show, handleClose }) => {
                       {bank.name}
                     </option>
                   ))}
-                </Form.Control>
-              </Col>
-            </Form.Group>
+                </select>
+              </div>
+            </div>
           </Modal.Body>
           <Modal.Footer>
             <Button
