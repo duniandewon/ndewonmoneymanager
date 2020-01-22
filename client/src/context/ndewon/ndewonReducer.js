@@ -37,7 +37,7 @@ export default (state, action) => {
       return {
         ...state,
         categories: state.categories.map(category =>
-          category.id === action.payload.id ? action.payload : category
+          category._id === action.payload._id ? action.payload : category
         ),
         loading: false
       };

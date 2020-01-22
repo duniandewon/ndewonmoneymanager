@@ -102,11 +102,30 @@ const NdewonState = props => {
   };
 
   /** Udate category */
-  const updateCategory = category => {
-    dispatch({
-      type: UPDATE_CATEGORY,
-      payload: category
-    });
+  const updateCategory = async category => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    try {
+      const res = await axios.put(
+        `/api/categories/${category._id}`,
+        category,
+        config
+      );
+
+      dispatch({
+        type: UPDATE_CATEGORY,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({
+        type: ERRORS,
+        payload: err.response.data.errors
+      });
+    }
   };
 
   /** Delete category */
