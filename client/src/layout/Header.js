@@ -10,11 +10,11 @@ import ndewonContext from '../context/ndewon/ndewonContext';
 const Header = ({ sideNav, setSideNav }) => {
   const { logout, isAuthenticated } = useContext(authContext);
 
-  const { clearCategories } = useContext(ndewonContext);
+  const { clearState } = useContext(ndewonContext);
 
   const handleLogout = () => {
     logout();
-    clearCategories();
+    clearState();
   };
 
   return (

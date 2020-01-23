@@ -207,11 +207,12 @@ const TransactionForm = ({ show, handleClose }) => {
                   required
                 >
                   <option>Choose One</option>
-                  {banks.map(bank => (
-                    <option key={bank.id} value={bank.name}>
-                      {bank.name}
-                    </option>
-                  ))}
+                  {banks &&
+                    banks.map(bank => (
+                      <option key={bank.id} value={bank.name}>
+                        {bank.name}
+                      </option>
+                    ))}
                 </select>
               </div>
             </div>

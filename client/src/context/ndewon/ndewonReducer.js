@@ -3,7 +3,7 @@ import {
   ADD_CATEGORY,
   UPDATE_CATEGORY,
   DELETE_CATEGORY,
-  CLEAR_CATEGORY,
+  GET_BANK,
   ADD_BANK,
   UPDATE_BANK,
   DELETE_BANK,
@@ -14,6 +14,7 @@ import {
   CLEAR_CURRENT,
   FILTER,
   CLEAR_FILTER,
+  CLEAR_STATE,
   ERRORS
 } from '../types';
 
@@ -29,7 +30,7 @@ export default (state, action) => {
     case ADD_CATEGORY:
       return {
         ...state,
-        categories: [...state.categories, action.payload],
+        categories: [action.payload, ...state.categories],
         loading: false
       };
 
@@ -51,33 +52,34 @@ export default (state, action) => {
         loading: false
       };
 
-    case CLEAR_CATEGORY:
+    case GET_BANK:
       return {
         ...state,
-        categories: null,
-        filtered: null,
-        errors: null,
-        current: null
+        banks: action.payload,
+        loading: false
       };
 
     case ADD_BANK:
       return {
         ...state,
-        banks: [...state.banks, action.payload]
+        banks: [action.payload, ...state.banks],
+        loading: false
       };
 
     case UPDATE_BANK:
       return {
         ...state,
         banks: state.banks.map(bank =>
-          bank.id === action.payload.id ? action.payload : bank
-        )
+          bank._id === action.payload._id ? action.payload : bank
+        ),
+        loading: false
       };
 
     case DELETE_BANK:
       return {
         ...state,
-        banks: state.banks.filter(bank => bank.id !== action.payload)
+        banks: state.banks.filter(bank => bank._id !== action.payload),
+        loading: false
       };
 
     case SET_CURRENT:
@@ -133,6 +135,17 @@ export default (state, action) => {
       return {
         ...state,
         errors: action.payload
+      };
+
+    case CLEAR_STATE:
+      return {
+        ...state,
+        categories: null,
+        banks: null,
+        // transactions: null,
+        filtered: null,
+        errors: null,
+        current: null
       };
 
     default:

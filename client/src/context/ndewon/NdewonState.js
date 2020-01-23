@@ -10,7 +10,7 @@ import {
   ADD_CATEGORY,
   UPDATE_CATEGORY,
   DELETE_CATEGORY,
-  CLEAR_CATEGORY,
+  GET_BANK,
   ADD_BANK,
   UPDATE_BANK,
   DELETE_BANK,
@@ -19,6 +19,7 @@ import {
   DELETE_TRANSACTION,
   SET_CURRENT,
   CLEAR_CURRENT,
+  CLEAR_STATE,
   FILTER,
   CLEAR_FILTER,
   ERRORS
@@ -27,22 +28,7 @@ import {
 const NdewonState = props => {
   const initialState = {
     categories: null,
-    banks: [
-      {
-        id: 1,
-        name: 'BCA',
-        accountNumber: '1234567890',
-        accountHolder: 'John Doe',
-        balance: 1000
-      },
-      {
-        id: 2,
-        name: 'BRI',
-        accountNumber: '0987654321',
-        accountHolder: 'John Doe',
-        balance: 0
-      }
-    ],
+    banks: null,
     transactions: [
       {
         id: 1,
@@ -144,37 +130,83 @@ const NdewonState = props => {
     }
   };
 
-  /** Clear categories */
-  const clearCategories = () => {
-    dispatch({
-      type: CLEAR_CATEGORY
-    });
+  /** Get banks */
+  const getBanks = async () => {
+    try {
+      const res = await axios.get('/api/banks');
+
+      dispatch({
+        type: GET_BANK,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({
+        type: ERRORS,
+        payload: err.response.data.errors
+      });
+    }
   };
 
   /** Add Banks */
-  const addBank = bank => {
-    bank.id = uuid.v4();
+  const addBank = async bank => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
 
-    dispatch({
-      type: ADD_BANK,
-      payload: bank
-    });
+    try {
+      const res = await axios.post('/api/banks', bank, config);
+
+      dispatch({
+        type: ADD_BANK,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({
+        type: ERRORS,
+        payload: err.response.data.errors
+      });
+    }
   };
 
   /** Udate bank */
-  const updateBank = bank => {
-    dispatch({
-      type: UPDATE_BANK,
-      payload: bank
-    });
+  const updateBank = async bank => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    try {
+      const res = await axios.put(`/api/banks/${bank._id}`, bank, config);
+
+      dispatch({
+        type: UPDATE_BANK,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({
+        type: ERRORS,
+        payload: err.response.data.errors
+      });
+    }
   };
 
   /** Delete bank */
-  const deleteBank = id => {
-    dispatch({
-      type: DELETE_BANK,
-      payload: id
-    });
+  const deleteBank = async id => {
+    try {
+      await axios.delete(`/api/banks/${id}`);
+      dispatch({
+        type: DELETE_BANK,
+        payload: id
+      });
+    } catch (err) {
+      dispatch({
+        type: ERRORS,
+        payload: err.response.data.errors
+      });
+    }
   };
 
   /** Add transaction */
@@ -233,6 +265,13 @@ const NdewonState = props => {
     });
   };
 
+  /** Clear categories */
+  const clearState = () => {
+    dispatch({
+      type: CLEAR_STATE
+    });
+  };
+
   return (
     <NdewonContext.Provider
       value={{
@@ -246,7 +285,7 @@ const NdewonState = props => {
         addCategory,
         updateCategory,
         deleteCategory,
-        clearCategories,
+        getBanks,
         addBank,
         updateBank,
         deleteBank,
@@ -256,7 +295,8 @@ const NdewonState = props => {
         setCurrent,
         clearCurrent,
         filter,
-        clearFilter
+        clearFilter,
+        clearState
       }}
     >
       {props.children}

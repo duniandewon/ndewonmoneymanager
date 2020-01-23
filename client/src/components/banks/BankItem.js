@@ -17,7 +17,17 @@ const BankItem = () => {
   const handleClose = () => setForm(false);
   const handleShow = () => setForm(true);
 
-  const { banks, deleteBank, setCurrent, filtered } = useContext(ndewonContext);
+  const { banks, deleteBank, setCurrent, filtered, loading } = useContext(
+    ndewonContext
+  );
+
+  if (banks !== null && banks.length == 0 && !loading) {
+    return (
+      <p className='lead text-center'>
+        No banks available. Please create new banks
+      </p>
+    );
+  }
 
   return (
     <Fragment>
@@ -37,7 +47,7 @@ const BankItem = () => {
             <tbody>
               {filtered
                 ? filtered.map((bank, i) => (
-                    <tr key={bank.id}>
+                    <tr key={bank._id}>
                       <td>{i + 1}</td>
                       <td>{bank.name}</td>
                       <td>{bank.accountNumber}</td>
@@ -47,7 +57,7 @@ const BankItem = () => {
                         <Button
                           variant='danger'
                           onClick={() => {
-                            deleteBank(bank.id);
+                            deleteBank(bank._id);
                           }}
                         >
                           <i className='fas fa-trash-alt' />
@@ -65,7 +75,7 @@ const BankItem = () => {
                     </tr>
                   ))
                 : banks.map((bank, i) => (
-                    <tr key={bank.id}>
+                    <tr key={bank._id}>
                       <td>{i + 1}</td>
                       <td>{bank.name}</td>
                       <td>{bank.accountNumber}</td>
@@ -75,7 +85,7 @@ const BankItem = () => {
                         <Button
                           variant='danger'
                           onClick={() => {
-                            deleteBank(bank.id);
+                            deleteBank(bank._id);
                           }}
                         >
                           <i className='fas fa-trash-alt' />
