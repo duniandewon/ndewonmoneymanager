@@ -7,6 +7,7 @@ import {
   ADD_BANK,
   UPDATE_BANK,
   DELETE_BANK,
+  GET_TRANSACTION,
   ADD_TRANSACTION,
   UPDATE_TRANSACTION,
   DELETE_TRANSACTION,
@@ -88,17 +89,25 @@ export default (state, action) => {
         current: action.payload
       };
 
+    case GET_TRANSACTION:
+      return {
+        ...state,
+        transactions: action.payload,
+        loading: false
+      };
+
     case ADD_TRANSACTION:
       return {
         ...state,
-        transactions: [...state.transactions, action.payload]
+        transactions: [action.payload, ...state.transactions],
+        loading: false
       };
 
     case UPDATE_TRANSACTION:
       return {
         ...state,
         transactions: state.transactions.map(transaction =>
-          transaction.id === action.payload.id ? action.payload : transaction
+          transaction._id === action.payload._id ? action.payload : transaction
         )
       };
 
@@ -106,7 +115,7 @@ export default (state, action) => {
       return {
         ...state,
         transactions: state.transactions.filter(
-          transaction => transaction.id !== action.payload
+          transaction => transaction._id !== action.payload
         )
       };
 
@@ -142,7 +151,7 @@ export default (state, action) => {
         ...state,
         categories: null,
         banks: null,
-        // transactions: null,
+        transactions: null,
         filtered: null,
         errors: null,
         current: null

@@ -10,6 +10,7 @@ import ndewonContext from '../context/ndewon/ndewonContext';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
+import Spinner from 'react-bootstrap/Spinner';
 
 /** Ndewon Components */
 import TransactionForm from '../components/transactions/TransactionForm';
@@ -19,7 +20,13 @@ import TransactionFilter from '../components/transactions/TransactionFilter';
 const Transactions = () => {
   const { loadUser } = useContext(authContext);
 
-  const { getCategories, getBanks } = useContext(ndewonContext);
+  const {
+    transactions,
+    getCategories,
+    getBanks,
+    getTransactions,
+    loading
+  } = useContext(ndewonContext);
 
   const [form, setForm] = useState(false);
 
@@ -30,6 +37,7 @@ const Transactions = () => {
     loadUser();
     getCategories();
     getBanks();
+    getTransactions();
   }, []);
 
   return (
@@ -38,15 +46,21 @@ const Transactions = () => {
         <TransactionFilter handleShow={handleShow} />
       </Row>
       <Row>
-        <Col>
-          <Card>
-            <TransactionItem
-              show={form}
-              handleClose={handleClose}
-              handleShow={handleShow}
-            />
-          </Card>
-        </Col>
+        {transactions !== null && !loading ? (
+          <Col>
+            <Card>
+              <TransactionItem
+                show={form}
+                handleClose={handleClose}
+                handleShow={handleShow}
+              />
+            </Card>
+          </Col>
+        ) : (
+          <Col className='d-flex justify-content-center'>
+            <Spinner animation='grow' variant='dark' />
+          </Col>
+        )}
       </Row>
       <TransactionForm show={form} handleClose={handleClose} />
     </Fragment>

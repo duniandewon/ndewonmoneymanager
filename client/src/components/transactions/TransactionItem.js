@@ -23,21 +23,29 @@ const TransactionItem = () => {
     updateBank,
     transactions,
     deleteTransaction,
-    setCurrent
+    setCurrent,
+    filtered,
+    loading
   } = useContext(ndewonContext);
 
   const handleDelete = transaction => {
-    const bank = banks.filter(
-      bank => bank.name === transaction.trnBank && bank
-    )[0];
+    const bank = banks.filter(bank => bank._id === transaction.bank && bank)[0];
 
     transaction.type === 'income'
       ? (bank.balance -= Number(transaction.amount))
       : (bank.balance += Number(transaction.amount));
 
     updateBank(bank);
-    deleteTransaction(transaction.id);
+    deleteTransaction(transaction._id);
   };
+
+  if (transactions !== null && transactions.length === 0 && !loading) {
+    return (
+      <p className='lead text-center'>
+        No transactions available. Please create new transactions
+      </p>
+    );
+  }
 
   return (
     <Fragment>
@@ -55,36 +63,67 @@ const TransactionItem = () => {
             </tr>
           </thead>
           <tbody>
-            {transactions.map((transaction, i) => (
-              <tr key={transaction.id}>
-                <td>{i + 1}</td>
-                <td>{transaction.date}</td>
-                <td>
-                  {transaction.type.charAt(0).toUpperCase() +
-                    transaction.type.slice(1)}
-                </td>
-                <td>{transaction.category}</td>
-                <td>{transaction.description}</td>
-                <td>${transaction.amount}</td>
-                <td>
-                  <Button
-                    variant='danger'
-                    onClick={() => handleDelete(transaction)}
-                  >
-                    <i className='fas fa-trash-alt' />
-                  </Button>{' '}
-                  <Button
-                    variant='info'
-                    onClick={() => {
-                      setCurrent(transaction);
-                      handleShow();
-                    }}
-                  >
-                    <i className='fas fa-cog' />
-                  </Button>
-                </td>
-              </tr>
-            ))}
+            {filtered
+              ? filtered.map((transaction, i) => (
+                  <tr key={transaction._id}>
+                    <td>{i + 1}</td>
+                    <td>{transaction.date}</td>
+                    <td>
+                      {transaction.type.charAt(0).toUpperCase() +
+                        transaction.type.slice(1)}
+                    </td>
+                    <td>{transaction.category}</td>
+                    <td>{transaction.description}</td>
+                    <td>${transaction.amount}</td>
+                    <td>
+                      <Button
+                        variant='danger'
+                        onClick={() => handleDelete(transaction)}
+                      >
+                        <i className='fas fa-trash-alt' />
+                      </Button>{' '}
+                      <Button
+                        variant='info'
+                        onClick={() => {
+                          setCurrent(transaction);
+                          handleShow();
+                        }}
+                      >
+                        <i className='fas fa-cog' />
+                      </Button>
+                    </td>
+                  </tr>
+                ))
+              : transactions.map((transaction, i) => (
+                  <tr key={transaction._id}>
+                    <td>{i + 1}</td>
+                    <td>{transaction.date}</td>
+                    <td>
+                      {transaction.type.charAt(0).toUpperCase() +
+                        transaction.type.slice(1)}
+                    </td>
+                    <td>{transaction.category}</td>
+                    <td>{transaction.description}</td>
+                    <td>${transaction.amount}</td>
+                    <td>
+                      <Button
+                        variant='danger'
+                        onClick={() => handleDelete(transaction)}
+                      >
+                        <i className='fas fa-trash-alt' />
+                      </Button>{' '}
+                      <Button
+                        variant='info'
+                        onClick={() => {
+                          setCurrent(transaction);
+                          handleShow();
+                        }}
+                      >
+                        <i className='fas fa-cog' />
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
           </tbody>
         </Table>
       </Card.Body>

@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useState, useEffect } from 'react';
+import React, { Fragment, useContext, useState } from 'react';
 
 /** Category context */
 import ndewonContext from '../../context/ndewon/ndewonContext';
@@ -25,7 +25,7 @@ const CategoryItem = () => {
     loading
   } = useContext(ndewonContext);
 
-  if (categories !== null && categories.length == 0 && !loading) {
+  if (categories !== null && categories.length === 0 && !loading) {
     return (
       <p className='lead text-center'>
         No categories available. Please create new categories

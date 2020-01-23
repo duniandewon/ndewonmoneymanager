@@ -55,8 +55,8 @@ router.post(
     }
     const { date, type, category, amount, bank, description } = req.body;
 
-    const transactionBank = await Bank.findOne({ name: bank });
-    const transactionCategory = await Category.findOne({ name: category });
+    const transactionBank = await Bank.findById(bank);
+    const transactionCategory = await Category.findById(category);
 
     if (!transactionBank)
       return res.status(404).json({ msg: "Bank doesn't exist" });
@@ -75,7 +75,7 @@ router.post(
         user: req.user.id
       });
 
-      type === 'Pengeluaran'
+      type === 'expenses'
         ? await Bank.findByIdAndUpdate(transactionBank.id, {
             balance: transactionBank.balance - Number(amount)
           })

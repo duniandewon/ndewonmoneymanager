@@ -16,12 +16,15 @@ import LatestTransactions from '../components/LatestTransactions';
 const Dashboard = () => {
   const { loadUser } = useContext(authContext);
 
-  const { getCategories, getBanks } = useContext(ndewonContext);
+  const { getCategories, getBanks, getTransactions } = useContext(
+    ndewonContext
+  );
 
   useEffect(() => {
     loadUser();
     getCategories();
     getBanks();
+    getTransactions();
   }, []);
 
   return (

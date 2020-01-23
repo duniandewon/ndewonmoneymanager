@@ -1,5 +1,7 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
+
+import ndewonContext from '../context/ndewon/ndewonContext';
 
 /** Bootsrap Components */
 import Row from 'react-bootstrap/Row';
@@ -16,6 +18,8 @@ const LatestTransactions = () => {
 
   const handleClose = () => setForm(false);
   const handleShow = () => setForm(true);
+
+  const { transactions, loading } = useContext(ndewonContext);
 
   return (
     <Fragment>
@@ -37,7 +41,13 @@ const LatestTransactions = () => {
               </Col>
             </Row>
           </Card.Header>
-          <TransactionItem />
+          {transactions !== null && transactions.length > 0 && !loading ? (
+            <TransactionItem />
+          ) : (
+            <p className='lead text-center'>
+              No transactions available. Please create new transactions
+            </p>
+          )}
           <Card.Footer className='d-flex justify-content-end'>
             <Link to='/transactions' className='btn btn-link btn-lg'>
               View All <i className='fas fa-play fa-xs'></i>

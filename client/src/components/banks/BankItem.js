@@ -21,7 +21,7 @@ const BankItem = () => {
     ndewonContext
   );
 
-  if (banks !== null && banks.length == 0 && !loading) {
+  if (banks !== null && banks.length === 0 && !loading) {
     return (
       <p className='lead text-center'>
         No banks available. Please create new banks

@@ -14,14 +14,15 @@ import {
   ADD_BANK,
   UPDATE_BANK,
   DELETE_BANK,
+  GET_TRANSACTION,
   ADD_TRANSACTION,
   UPDATE_TRANSACTION,
   DELETE_TRANSACTION,
   SET_CURRENT,
   CLEAR_CURRENT,
-  CLEAR_STATE,
   FILTER,
   CLEAR_FILTER,
+  CLEAR_STATE,
   ERRORS
 } from '../types';
 
@@ -29,17 +30,7 @@ const NdewonState = props => {
   const initialState = {
     categories: null,
     banks: null,
-    transactions: [
-      {
-        id: 1,
-        date: '2020-1-12',
-        type: 'income',
-        category: 'salary',
-        trnBank: 'BCA',
-        description: 'SMP Insan Semesta',
-        amount: 1000
-      }
-    ],
+    transactions: null,
     current: null,
     filtered: null,
     errors: null
@@ -209,30 +200,87 @@ const NdewonState = props => {
     }
   };
 
-  /** Add transaction */
-  const addTransaction = transaction => {
-    transaction.id = uuid.v4();
+  /** Get transactions */
+  const getTransactions = async () => {
+    try {
+      const res = await axios.get('/api/transactions');
 
-    dispatch({
-      type: ADD_TRANSACTION,
-      payload: transaction
-    });
+      dispatch({
+        type: GET_TRANSACTION,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({
+        type: ERRORS,
+        payload: err.response.data.errors
+      });
+    }
+  };
+
+  /** Add transaction */
+  const addTransaction = async transaction => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    try {
+      const res = await axios.post('/api/transactions', transaction, config);
+
+      dispatch({
+        type: ADD_TRANSACTION,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({
+        type: ERRORS,
+        payload: err.response.data.msg
+      });
+    }
   };
 
   /** Update Transactions */
-  const updateTransaction = transaction => {
-    dispatch({
-      type: UPDATE_TRANSACTION,
-      payload: transaction
-    });
+  const updateTransaction = async transaction => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    try {
+      const res = await axios.put(
+        `/api/transactions/${transaction._id}`,
+        transaction,
+        config
+      );
+
+      dispatch({
+        type: UPDATE_TRANSACTION,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({
+        type: ERRORS,
+        payload: err.response.data.msg
+      });
+    }
   };
 
   /** Delete Transaction */
-  const deleteTransaction = id => {
-    dispatch({
-      type: DELETE_TRANSACTION,
-      payload: id
-    });
+  const deleteTransaction = async id => {
+    try {
+      await axios.delete(`/api/transactions/${id}`);
+      dispatch({
+        type: DELETE_TRANSACTION,
+        payload: id
+      });
+    } catch (err) {
+      dispatch({
+        type: ERRORS,
+        payload: err.response.data.msg
+      });
+    }
   };
 
   /** Set current */
@@ -289,6 +337,7 @@ const NdewonState = props => {
         addBank,
         updateBank,
         deleteBank,
+        getTransactions,
         addTransaction,
         updateTransaction,
         deleteTransaction,

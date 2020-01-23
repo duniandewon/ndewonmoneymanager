@@ -12,8 +12,8 @@ const TransactionForm = ({ show, handleClose }) => {
   const [transaction, setTransaction] = useState({
     date: null,
     type: '',
-    trnCategory: '',
-    trnBank: null,
+    category: '',
+    bank: null,
     description: '',
     amount: null
   });
@@ -43,9 +43,7 @@ const TransactionForm = ({ show, handleClose }) => {
   const onSubmit = e => {
     e.preventDefault();
 
-    const bank = banks.filter(
-      bank => bank.name === transaction.trnBank && bank
-    )[0];
+    const bank = banks.filter(bank => bank._id === transaction.bank && bank)[0];
 
     if (current === null) {
       transaction.type === 'income'
@@ -69,8 +67,8 @@ const TransactionForm = ({ show, handleClose }) => {
     setTransaction({
       date: null,
       type: '',
-      trnCategory: '',
-      trnBank: '',
+      category: '',
+      bank: '',
       description: '',
       amount: null
     });
@@ -84,14 +82,14 @@ const TransactionForm = ({ show, handleClose }) => {
       : setTransaction({
           date: null,
           type: '',
-          trnCategory: '',
-          trnBank: '',
+          category: '',
+          bank: '',
           description: '',
           amount: null
         });
   }, [ndewonContext, current]);
 
-  const { date, type, trnBank, category, amount, description } = transaction;
+  const { date, type, bank, category, amount, description } = transaction;
 
   return (
     <Fragment>
@@ -115,7 +113,7 @@ const TransactionForm = ({ show, handleClose }) => {
                   className='form-control'
                   value={date}
                   onChange={onChange}
-                  required
+                  // required
                 />
               </div>
             </div>
@@ -199,17 +197,17 @@ const TransactionForm = ({ show, handleClose }) => {
               </label>
               <div className='col-sm-10'>
                 <select
-                  name='trnBank'
-                  id='trnBank'
+                  name='bank'
+                  id='bank'
                   className='form-control'
-                  value={trnBank}
+                  value={bank}
                   onChange={onChange}
                   required
                 >
                   <option>Choose One</option>
                   {banks &&
                     banks.map(bank => (
-                      <option key={bank._id} value={bank.name}>
+                      <option key={bank._id} value={bank._id}>
                         {bank.name}
                       </option>
                     ))}
