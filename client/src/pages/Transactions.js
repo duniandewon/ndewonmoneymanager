@@ -19,7 +19,7 @@ import TransactionFilter from '../components/transactions/TransactionFilter';
 const Transactions = () => {
   const { loadUser } = useContext(authContext);
 
-  const { getCategories } = useContext(ndewonContext);
+  const { getCategories, getBanks } = useContext(ndewonContext);
 
   const [form, setForm] = useState(false);
 
@@ -29,6 +29,7 @@ const Transactions = () => {
   useEffect(() => {
     loadUser();
     getCategories();
+    getBanks();
   }, []);
 
   return (

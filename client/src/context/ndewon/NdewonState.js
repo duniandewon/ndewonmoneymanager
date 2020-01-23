@@ -34,7 +34,7 @@ const NdewonState = props => {
         id: 1,
         date: '2020-1-12',
         type: 'income',
-        trnCategory: 'salary',
+        category: 'salary',
         trnBank: 'BCA',
         description: 'SMP Insan Semesta',
         amount: 1000

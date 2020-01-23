@@ -19,6 +19,7 @@ const TransactionItem = () => {
 
   const {
     banks,
+    categories,
     updateBank,
     transactions,
     deleteTransaction,
@@ -62,7 +63,7 @@ const TransactionItem = () => {
                   {transaction.type.charAt(0).toUpperCase() +
                     transaction.type.slice(1)}
                 </td>
-                <td>{transaction.trnCategory}</td>
+                <td>{transaction.category}</td>
                 <td>{transaction.description}</td>
                 <td>${transaction.amount}</td>
                 <td>

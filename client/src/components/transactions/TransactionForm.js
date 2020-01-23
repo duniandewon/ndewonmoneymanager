@@ -91,7 +91,7 @@ const TransactionForm = ({ show, handleClose }) => {
         });
   }, [ndewonContext, current]);
 
-  const { date, type, trnBank, trnCategory, amount, description } = transaction;
+  const { date, type, trnBank, category, amount, description } = transaction;
 
   return (
     <Fragment>
@@ -144,17 +144,17 @@ const TransactionForm = ({ show, handleClose }) => {
               </label>
               <div className='col-sm-10'>
                 <select
-                  name='trnCategory'
-                  id='trnCategory'
+                  name='category'
+                  id='category'
                   className='form-control'
-                  value={trnCategory}
+                  value={category}
                   onChange={onChange}
                   required
                 >
                   <option>Choose One</option>
                   {categories &&
                     categories.map(category => (
-                      <option key={category._id} value={category.name}>
+                      <option key={category._id} value={category._id}>
                         {category.name}
                       </option>
                     ))}
@@ -209,7 +209,7 @@ const TransactionForm = ({ show, handleClose }) => {
                   <option>Choose One</option>
                   {banks &&
                     banks.map(bank => (
-                      <option key={bank.id} value={bank.name}>
+                      <option key={bank._id} value={bank.name}>
                         {bank.name}
                       </option>
                     ))}
