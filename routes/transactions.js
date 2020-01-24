@@ -75,13 +75,13 @@ router.post(
         user: req.user.id
       });
 
-      type === 'expenses'
-        ? await Bank.findByIdAndUpdate(transactionBank.id, {
-            balance: transactionBank.balance - Number(amount)
-          })
-        : await Bank.findByIdAndUpdate(transactionBank.id, {
-            balance: transactionBank.balance + Number(amount)
-          });
+      // type === 'expenses'
+      //   ? await Bank.findByIdAndUpdate(transactionBank.id, {
+      //       balance: transactionBank.balance - Number(amount)
+      //     })
+      //   : await Bank.findByIdAndUpdate(transactionBank.id, {
+      //       balance: transactionBank.balance + Number(amount)
+      //     });
 
       const transaction = await newTransaction.save();
 
@@ -94,7 +94,7 @@ router.post(
 );
 
 /**
- * @route   POST api/transactions/:id
+ * @route   PUT api/transactions/:id
  * @desc    Update transactions
  * @access  Private
  */
@@ -103,17 +103,15 @@ router.put('/:id', auth, async (req, res) => {
 
   const { date, category, amount, description, type, bank } = req.body;
 
-  if (type)
-    return res.status(400).json({ msg: "You can't change transaction type" });
-  if (bank)
-    return res.status(400).json({ msg: "You can't change transaction bank" });
-
-  const getNewCategory = await Category.findOne({ name: category });
+  const getNewCategory = await Category.findById(category);
 
   const transactionFields = {};
   if (date) transactionFields.date = date;
   if (description) transactionFields.description = description;
   if (category) transactionFields.category = getNewCategory.id;
+  if (type) transactionFields.type = type;
+  if (bank) transactionFields.bank = bank;
+  if (amount) transactionFields.amount = amount;
 
   try {
     let transaction = await Transaction.findById(req.params.id);
@@ -125,22 +123,22 @@ router.put('/:id', auth, async (req, res) => {
     if (transaction.user.toString() !== req.user.id)
       return res.status(401).json({ msg: 'Action not auhtorized' });
 
-    if (amount) {
-      transactionFields.amount = amount;
+    // if (amount) {
+    //   transactionFields.amount = amount;
 
-      /** Get bank to update balance */
-      const bank = await Bank.findById(transaction.bank);
+    //   /** Get bank to update balance */
+    //   const bank = await Bank.findById(transaction.bank);
 
-      /** Calculate balance */
-      let newBalance;
+    //   /** Calculate balance */
+    //   let newBalance;
 
-      transaction.type === 'Pengeluaran'
-        ? (newBalance = bank.balance - (Number(amount) - transaction.amount))
-        : (newBalance = bank.balance + (Number(amount) - transaction.amount));
+    //   transaction.type === 'expenses'
+    //     ? (newBalance = bank.balance - (Number(amount) - transaction.amount))
+    //     : (newBalance = bank.balance + (Number(amount) - transaction.amount));
 
-      /** Update balance in the bank */
-      await Bank.findByIdAndUpdate(transaction.bank, { balance: newBalance });
-    }
+    //   /** Update balance in the bank */
+    //   await Bank.findByIdAndUpdate(transaction.bank, { balance: newBalance });
+    // }
 
     /** Update transaction */
     transaction = await Transaction.findByIdAndUpdate(
@@ -151,7 +149,6 @@ router.put('/:id', auth, async (req, res) => {
 
     res.json(transaction);
   } catch (err) {
-    console.error(err.message);
     res.status(500).send('Server error');
   }
 });
@@ -175,13 +172,13 @@ router.delete('/:id', auth, async (req, res) => {
     /** Get bank to update balance */
     const bank = await Bank.findById(transaction.bank);
 
-    transaction.type === 'Pengeluaran'
-      ? await Bank.findByIdAndUpdate(transaction.bank, {
-          balance: bank.balance + transaction.amount
-        })
-      : await Bank.findByIdAndUpdate(transaction.bank, {
-          balance: bank.balance - transaction.amount
-        });
+    // transaction.type === 'expenses'
+    //   ? await Bank.findByIdAndUpdate(transaction.bank, {
+    //       balance: bank.balance + transaction.amount
+    //     })
+    //   : await Bank.findByIdAndUpdate(transaction.bank, {
+    //       balance: bank.balance - transaction.amount
+    //     });
 
     await Transaction.findByIdAndDelete(req.params.id);
 
