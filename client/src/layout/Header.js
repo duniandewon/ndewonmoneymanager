@@ -20,7 +20,7 @@ const Header = ({ sideNav, setSideNav }) => {
   return (
     <Fragment>
       <header className='header'>
-        <Link to='/' className='site-logo' style={{ color: '#fff' }}>
+        <Link to='/dashboard' className='site-logo' style={{ color: '#fff' }}>
           <h1>Ndewon Admin Dashboard</h1>
         </Link>
         {isAuthenticated && (

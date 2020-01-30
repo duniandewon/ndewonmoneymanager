@@ -30,7 +30,7 @@ const Sidenav = ({ sideNav, setSideNav }) => {
         <ul className='main-nav'>
           <li className='main-nav__item'>
             <Link
-              to='/'
+              to='/dashboard'
               className='main-nav__link active'
               onClick={() => setSideNav('')}
             >
