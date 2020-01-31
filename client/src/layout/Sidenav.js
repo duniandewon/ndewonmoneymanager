@@ -4,29 +4,36 @@ import { Link } from 'react-router-dom';
 /** Auth context */
 import authContext from '../context/auth/authContext';
 
+/** Ndewon context */
+import ndewonContext from '../context/ndewon/ndewonContext';
+
 const Sidenav = ({ sideNav, setSideNav }) => {
-  const { user } = useContext(authContext);
+  const { user, logout } = useContext(authContext);
+
+  const { clearState } = useContext(ndewonContext);
+
+  const handleLogout = () => {
+    setSideNav('');
+    logout();
+    clearState();
+  };
+
   return (
     <Fragment>
       <aside className={`sidenav ${sideNav}`}>
-        <div className='sidenav__close-icon' onClick={() => setSideNav('')}>
-          <i className='fas fa-times' />
+        <div className='sidenav__header'>
+          <div className='sidenav__header-img'>
+            <img src='//unsplash.it/100/100' alt='user profile image' />
+          </div>
+          <p className='sidenav__header-info'>
+            <span className='sidenav__header-info--name'>
+              {user && user.name}
+            </span>
+            <span className='sidenav__header-info--position'>
+              Chief Executive Officer
+            </span>
+          </p>
         </div>
-        {user && (
-          <Fragment>
-            <div className='sidenav__header'>
-              <div className='sidenav__header-img'>
-                <img src='//unsplash.it/100/100' alt='user profile image' />
-              </div>
-              <p className='sidenav__header-info'>
-                <span className='sidenav__header-info--name'>{user.name}</span>
-                <span className='sidenav__header-info--position'>
-                  Chief Executive Officer
-                </span>
-              </p>
-            </div>
-          </Fragment>
-        )}
         <ul className='main-nav'>
           <li className='main-nav__item'>
             <Link
@@ -76,6 +83,12 @@ const Sidenav = ({ sideNav, setSideNav }) => {
             >
               <i className='fas fa-chart-pie' />
               <span className='main-nav__link--text'>Reports</span>
+            </Link>
+          </li>
+          <li className='main-nav__item'>
+            <Link to='#' className='main-nav__link' onClick={handleLogout}>
+              <i class='fas fa-power-off'></i>
+              <span className='main-nav__link--text'>Log Out</span>
             </Link>
           </li>
         </ul>

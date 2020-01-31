@@ -8,7 +8,7 @@ import authContext from '../context/auth/authContext';
 import ndewonContext from '../context/ndewon/ndewonContext';
 
 const Header = ({ sideNav, setSideNav }) => {
-  const { logout, isAuthenticated } = useContext(authContext);
+  const { logout } = useContext(authContext);
 
   const { clearState } = useContext(ndewonContext);
 
@@ -23,19 +23,14 @@ const Header = ({ sideNav, setSideNav }) => {
         <Link to='/dashboard' className='site-logo' style={{ color: '#fff' }}>
           <h1>Ndewon Admin Dashboard</h1>
         </Link>
-        {isAuthenticated && (
-          <Fragment>
-            <div
-              className='sidenav__toggler'
-              onClick={() => sideNav === '' && setSideNav('active')}
-            >
-              <i className='fas fa-bars' />
-            </div>
-            <Link to='#' className='btn btn-primary' onClick={handleLogout}>
-              <i className='fas fa-sign-out-alt' />
-            </Link>
-          </Fragment>
-        )}
+        <div
+          className='sidenav__toggler d-lg-none'
+          onClick={() =>
+            sideNav === '' ? setSideNav('active') : setSideNav('')
+          }
+        >
+          <i className='fas fa-bars' />
+        </div>
       </header>
     </Fragment>
   );
