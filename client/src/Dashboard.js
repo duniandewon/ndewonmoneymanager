@@ -37,7 +37,6 @@ const Dashboard = () => {
         </Main>
         <Footer />
       </div>
-      {/** ./wrapper */}
     </Fragment>
   );
 };

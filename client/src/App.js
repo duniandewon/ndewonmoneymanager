@@ -7,10 +7,6 @@ import AuthState from './context/auth/AuthState';
 import AlertState from './context/alert/AlertState';
 
 /** layout */
-import Header from './layout/Header';
-import Sidenav from './layout/Sidenav';
-import Main from './layout/Main';
-import Footer from './layout/Footer';
 import Alerts from './layout/alerts';
 
 /** pages */
