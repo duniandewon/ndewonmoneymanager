@@ -7,12 +7,6 @@ import authContext from '../../context/auth/authContext';
 /** Alert context */
 import alertContext from '../../context/alert/alertContext';
 
-/** Bootstrap components */
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-
 const Register = props => {
   const [user, setUser] = useState({
     name: '',
@@ -60,61 +54,69 @@ const Register = props => {
 
   return (
     <Fragment>
-      <h1 className='text-center'>
-        Create <span className='text-primary'>Account</span>
-      </h1>
-      <Row className='justify-content-center'>
-        <Col xs={6}>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group controlId='name'>
-              <Form.Label>Name</Form.Label>
-              <Form.Control
-                as='input'
-                type='text'
-                defaultValue={name}
-                onChange={handleChange}
-                name='name'
-              />
-            </Form.Group>
-            <Form.Group controlId='email'>
-              <Form.Label>Email</Form.Label>
-              <Form.Control
-                as='input'
-                type='email'
-                defaultValue={email}
-                onChange={handleChange}
-                name='email'
-              />
-            </Form.Group>
-            <Form.Group controlId='password'>
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                as='input'
-                type='password'
-                defaultValue={password}
-                onChange={handleChange}
-                name='password'
-              />
-            </Form.Group>
-            <Form.Group controlId='confPassword'>
-              <Form.Label>Confirm Password</Form.Label>
-              <Form.Control
-                as='input'
-                type='password'
-                defaultValue={confPassword}
-                onChange={handleChange}
-                name='confPassword'
-              />
-            </Form.Group>
-            <Button variant='success' type='submit' size='lg' block>
-              Register
-            </Button>
-            <Link to='/login' className='btn btn-link btn-block btn-lg'>
-              Already have an account?
-            </Link>
-          </Form>
-        </Col>
-      </Row>
+      <div className='row justify-content-center mt-5'>
+        <div className='col-6'>
+          <div className='card'>
+            <div className='card-body'>
+              <h1 className='text-center'>
+                User <span className='text-primary'>Register</span>
+              </h1>
+              <form onSubmit={handleSubmit}>
+                <div className='form-group'>
+                  <label htmlFor='name'>Name:</label>
+                  <input
+                    type='text'
+                    name='name'
+                    id='name'
+                    className='form-control'
+                    value={name}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className='form-group'>
+                  <label htmlFor='email'>Email:</label>
+                  <input
+                    type='email'
+                    name='email'
+                    id='email'
+                    className='form-control'
+                    value={email}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className='form-group'>
+                  <label htmlFor='password'>Password:</label>
+                  <input
+                    type='password'
+                    name='password'
+                    id='password'
+                    className='form-control'
+                    value={password}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className='form-group'>
+                  <label htmlFor='password'>Confirm Password:</label>
+                  <input
+                    type='password'
+                    name='confPassword'
+                    id='confPassword'
+                    className='form-control'
+                    value={confPassword}
+                    onChange={handleChange}
+                  />
+                </div>
+                <button type='submit' class='btn btn-success btn-lg btn-block'>
+                  Log in
+                </button>
+                <Link to='/login' className='btn btn-link btn-block btn-lg'>
+                  Have an account already? Log in here.
+                </Link>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
     </Fragment>
   );
 };

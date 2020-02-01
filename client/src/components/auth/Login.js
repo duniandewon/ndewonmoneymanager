@@ -7,12 +7,6 @@ import authContext from '../../context/auth/authContext';
 /** Alert context */
 import alertContext from '../../context/alert/alertContext';
 
-/** Bootstrap components */
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-
 const Login = props => {
   const [user, setUser] = useState({
     email: '',
@@ -29,7 +23,7 @@ const Login = props => {
   const handleChange = e => {
     setUser({
       ...user,
-      [e.target.id]: e.target.value
+      [e.target.name]: e.target.value
     });
   };
 
@@ -57,39 +51,47 @@ const Login = props => {
 
   return (
     <Fragment>
-      <h1 className='text-center'>
-        User <span className='text-primary'>Login</span>
-      </h1>
-      <Row className='justify-content-center'>
-        <Col xs={6}>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group controlId='email'>
-              <Form.Label>Email</Form.Label>
-              <Form.Control
-                as='input'
-                type='email'
-                defaultValue={email}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Form.Group controlId='password'>
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                as='input'
-                type='password'
-                defaultValue={password}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Button variant='success' type='submit' size='lg' block>
-              Login
-            </Button>
-            <Link to='/register' className='btn btn-link btn-block btn-lg'>
-              Don't have an account?
-            </Link>
-          </Form>
-        </Col>
-      </Row>
+      <div className='row justify-content-center mt-5'>
+        <div className='col-6'>
+          <div className='card'>
+            <div className='card-body'>
+              <h1 className='text-center'>
+                User <span className='text-primary'>Login</span>
+              </h1>
+              <form onSubmit={handleSubmit}>
+                <div className='form-group'>
+                  <label htmlFor='email'>Email:</label>
+                  <input
+                    type='email'
+                    name='email'
+                    id='email'
+                    className='form-control'
+                    value={email}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className='form-group'>
+                  <label htmlFor='password'>Password:</label>
+                  <input
+                    type='password'
+                    name='password'
+                    id='password'
+                    className='form-control'
+                    value={password}
+                    onChange={handleChange}
+                  />
+                </div>
+                <button type='submit' class='btn btn-success btn-lg btn-block'>
+                  Log in
+                </button>
+                <Link to='/register' className='btn btn-link btn-block btn-lg'>
+                  Don't have an account? Register here.
+                </Link>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
     </Fragment>
   );
 };
