@@ -48,6 +48,10 @@ const TransactionItem = () => {
     );
   }
 
+  const trnCategories = transactions.map(
+    trn => categories.find(cat => cat._id === trn.category).name
+  );
+
   return (
     <Fragment>
       <Card.Body className='p-0'>
@@ -105,7 +109,7 @@ const TransactionItem = () => {
                       {transaction.type.charAt(0).toUpperCase() +
                         transaction.type.slice(1)}
                     </td>
-                    <td>{transaction.category}</td>
+                    <td>{trnCategories[i]}</td>
                     <td>{transaction.description}</td>
                     <td>${transaction.amount}</td>
                     <td>
