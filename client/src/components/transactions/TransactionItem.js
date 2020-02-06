@@ -1,4 +1,5 @@
-import React, { Fragment, useContext, useState } from 'react';
+import React, { Fragment, useContext, useState, useEffect } from 'react';
+import Moment from 'react-moment';
 
 /** Context API */
 import ndewonContext from '../../context/ndewon/ndewonContext';
@@ -97,7 +98,9 @@ const TransactionItem = () => {
               : transactions.map((transaction, i) => (
                   <tr key={transaction._id}>
                     <td>{i + 1}</td>
-                    <td>{transaction.date}</td>
+                    <td>
+                      <Moment format={'YYYY/MM/DD'}>{transaction.date}</Moment>
+                    </td>
                     <td>
                       {transaction.type.charAt(0).toUpperCase() +
                         transaction.type.slice(1)}
